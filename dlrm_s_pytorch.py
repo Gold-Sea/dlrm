@@ -1602,7 +1602,6 @@ def run():
                         t2 = time_wrap(use_gpu)
                         # total_time += t2 - t1
                         total_time += t2 - prev_t2
-                        trainer.record(t2 - prev_t2)
                         prev_t2 = t2
 
                     total_loss += L * mbs
