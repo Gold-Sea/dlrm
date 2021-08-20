@@ -108,12 +108,6 @@ with warnings.catch_warnings():
 # import torch.nn.functional as Functional
 # from torch.nn.parameter import Parameter
 
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from trainer import Trainer
-import utils
-import time
-trainer = None
 
 exc = getattr(builtins, "IOError", "FileNotFoundError")
 
@@ -1014,19 +1008,13 @@ def run():
     parser.add_argument("--lr-num-warmup-steps", type=int, default=0)
     parser.add_argument("--lr-decay-start-step", type=int, default=0)
     parser.add_argument("--lr-num-decay-steps", type=int, default=0)
-    parser.add_argument('--scheduler_ip', type=str, required=True)
-    parser.add_argument('--scheduler_port', type=int, default=6890)
-    parser.add_argument('--trainer_port', type=int)
-    parser.add_argument('--job_id', type=int, default=-1)
+
 
     global args
     global nbatches
     global nbatches_test
     global writer
     args = parser.parse_args()
-
-    global trainer
-    trainer = Trainer(args.scheduler_ip, args.scheduler_port, utils.get_host_ip(), args.trainer_port, args.job_id, args.mini_batch_size)
 
     if args.dataset_multiprocessing:
         assert float(sys.version[:3]) > 3.7, "The dataset_multiprocessing " + \
